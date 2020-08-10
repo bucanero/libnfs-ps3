@@ -41,6 +41,7 @@
 #endif
 
 #ifdef HAVE_UTIME_H
+#include <sys/types.h>
 #include <utime.h>
 #endif
 
@@ -4733,6 +4734,7 @@ nfs3_pread_async_internal(struct nfs_context *nfs, struct nfsfh *nfsfh,
 	if (data == NULL) {
 		nfs_set_error(nfs, "out of memory: failed to allocate "
                               "nfs_cb_data structure");
+		debugNetPrintf(3,"[LIBNFS] %s 1 \n",__FUNCTION__);
 		return -1;
 	}
 	memset(data, 0, sizeof(struct nfs_cb_data));
@@ -4835,6 +4837,8 @@ nfs3_pread_async_internal(struct nfs_context *nfs, struct nfsfh *nfsfh,
 			nfs_set_error(nfs, "out of memory: failed to allocate nfs_mcb_data structure");
 			if (data->num_calls == 0) {
 				free_nfs_cb_data(data);
+				debugNetPrintf(3,"[LIBNFS] %s 2 \n",__FUNCTION__);
+
 				return -1;
 			}
 			data->oom = 1;
@@ -4854,6 +4858,8 @@ nfs3_pread_async_internal(struct nfs_context *nfs, struct nfsfh *nfsfh,
 			free(mdata);
 			if (data->num_calls == 0) {
 				free_nfs_cb_data(data);
+				debugNetPrintf(3,"[LIBNFS] %s 3 \n",__FUNCTION__);
+
 				return -1;
 			}
 			data->oom = 1;

@@ -35,6 +35,7 @@
 #endif
 
 #ifdef HAVE_UTIME_H
+#include <sys/types.h>
 #include <utime.h>
 #endif
 

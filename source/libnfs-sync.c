@@ -55,7 +55,7 @@
 #endif
 
 #ifdef HAVE_POLL_H
-#include <poll.h>
+#include <net/poll.h>
 #endif
 
 #ifdef HAVE_NETDB_H
@@ -97,6 +97,10 @@
 #include "libnfs-raw-mount.h"
 #include "libnfs-raw-nfs.h"
 #include "libnfs-private.h"
+
+#ifdef PS3_PSL1GHT
+#include "net-if.h"
+#endif
 
 struct sync_cb_data {
 	int is_finished;
@@ -2146,9 +2150,11 @@ send_nfsd_probes(struct rpc_context *rpc, struct ifconf *ifc,
 		if (ifr.ifr_addr.sa_family != AF_INET) {
 			continue;
 		}
+/*
 		if (ioctl(rpc_get_fd(rpc), SIOCGIFFLAGS, &ifr) < 0) {
 			return -1;
 		}
+*/
 		if (!(ifr.ifr_flags & IFF_UP)) {
 			continue;
 		}
@@ -2158,9 +2164,11 @@ send_nfsd_probes(struct rpc_context *rpc, struct ifconf *ifc,
 		if (!(ifr.ifr_flags & IFF_BROADCAST)) {
 			continue;
 		}
+/*
 		if (ioctl(rpc_get_fd(rpc), SIOCGIFBRDADDR, &ifr) < 0) {
 			continue;
 		}
+*/
 		//if (getnameinfo(&ifr.ifr_broadaddr, sizeof(struct sockaddr_in),
         //                        &bcdd[0], sizeof(bcdd), NULL, 0,
         //                        NI_NUMERICHOST) < 0) {
@@ -2212,11 +2220,13 @@ nfs_find_local_servers(void)
 		ifc.ifc_len = size;
 		ifc.ifc_buf = malloc(size);
 		memset(ifc.ifc_buf, 0, size);
+/*
 		if (ioctl(rpc_get_fd(rpc), SIOCGIFCONF, (caddr_t)&ifc) < 0) {
 			rpc_destroy_context(rpc);
 			free(ifc.ifc_buf);
 			return NULL;
 		}
+*/
 	}
 
 	for (loop=0; loop<3; loop++) {

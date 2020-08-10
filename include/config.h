@@ -8,7 +8,7 @@
 /* #undef HAVE_CLOCK_GETTIME */
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#define HAVE_DLFCN_H 1
+//#define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <fuse.h> header file. */
 /* #undef HAVE_FUSE_H */
@@ -35,10 +35,10 @@
 #define HAVE_NETINET_IN_H 1
 
 /* Define to 1 if you have the <netinet/tcp.h> header file. */
-#define HAVE_NETINET_TCP_H 1
+//#define HAVE_NETINET_TCP_H 1
 
 /* Define to 1 if you have the <net/if.h> header file. */
-#define HAVE_NET_IF_H 1
+//#define HAVE_NET_IF_H 1
 
 /* Define to 1 if you have the <poll.h> header file. */
 #define HAVE_POLL_H 1
@@ -47,7 +47,7 @@
 #define HAVE_SOCKADDR_LEN 1
 
 /* Whether we have sockaddr_Storage */
-#define HAVE_SOCKADDR_STORAGE 1
+//#define HAVE_SOCKADDR_STORAGE 1
 
 /* Whether our sockets support SO_BINDTODEVICE */
 /* #undef HAVE_SO_BINDTODEVICE */
@@ -65,13 +65,13 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if `st_mtim.tv_nsec' is a member of `struct stat'. */
-#define HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC 1
+//#define HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC 1
 
 /* Define to 1 if you have the <sys/filio.h> header file. */
 /* #undef HAVE_SYS_FILIO_H */
 
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
-#define HAVE_SYS_IOCTL_H 1
+//#define HAVE_SYS_IOCTL_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #define HAVE_SYS_SOCKET_H 1
@@ -107,7 +107,7 @@
 #define HAVE_UTIME_H 1
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
-#define LT_OBJDIR ".libs/"
+//#define LT_OBJDIR ".libs/"
 
 /* Define to 1 if `major', `minor', and `makedev' are declared in <mkdev.h>.
    */

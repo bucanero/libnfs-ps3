@@ -1,8 +1,12 @@
 /*
- * liborbis 
- * Copyright (C) 2015,2016,2017,2018 Antonio Jose Ramos Marquez (aka bigboss) @psxdev on twitter
- * Repository https://github.com/orbisdev/liborbis
- */
+#  ____   ____    ____         ___ ____   ____ _     _
+# |    |  ____>   ____>  |    |        | <____  \   /
+# |____| |    \   ____>  | ___|    ____| <____   \_/	ORBISDEV Open Source Project.
+#------------------------------------------------------------------------------------
+# Copyright 2010-2020, orbisdev - http://orbisdev.github.io
+# Licenced under MIT license
+# Review README & LICENSE files for further details.
+*/
 #ifndef _ORBISNFS_H_
 #define _ORBISNFS_H_
 

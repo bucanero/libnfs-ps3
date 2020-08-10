@@ -32,13 +32,29 @@
 #include <net/if.h>
 #endif
 
+/* PS3 port definitions */
+#ifdef PS3_PSL1GHT
+#define IPPORT_RESERVED   1024
+#define MSG_NOSIGNAL      0x20000
+#define O_NOFOLLOW        0400000
+#define MINORBITS         20
+#define MINORMASK         ((1U << MINORBITS) - 1)
 
+#define major(dev)        ((unsigned int) ((dev) >> MINORBITS))
+#define minor(dev)        ((unsigned int) ((dev) & MINORMASK))
+
+#define IFF_UP          0x1     /* interface is up          */
+#define IFF_BROADCAST   0x2     /* broadcast address valid  */
+#define IFF_DEBUG       0x4     /* turn on debugging        */
+#define IFF_LOOPBACK    0x8     /* is a loopback net        */
+#endif
+/* PS3 port definitions */
 
 #if defined(WIN32) && !defined(IFNAMSIZ)
 #define IFNAMSIZ 255
+#else
+#define	IFNAMSIZ 16
 #endif
-
-#include <debugnet.h>
 
 #include "libnfs-zdr.h"
 #include "libnfs-raw-nfs.h"
@@ -210,12 +226,17 @@ void nfs_set_error(struct nfs_context *nfs, char *error_string, ...)
 #endif
 ;
 
+#define RPC_LOG(...)
+#define debugNetPrintf(...)
+
+/*
 #define RPC_LOG(rpc, level, format, ...) \
 	do { \
 		if (level <= rpc->debug) { \
 			debugNetPrintf(DEBUG, "libnfs:%d " format "\n", level, ## __VA_ARGS__); \
 		} \
 	} while (0)
+*/
 
 const char *nfs_get_server(struct nfs_context *nfs);
 const char *nfs_get_export(struct nfs_context *nfs);

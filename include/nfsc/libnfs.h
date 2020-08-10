@@ -25,10 +25,11 @@
 
 #include <stdint.h>
 #if defined(__ANDROID__) || defined(AROS) \
- || ( defined(__APPLE__) && defined(__MACH__) )
+ || ( defined(__APPLE__) && defined(__MACH__) ) \
+ || defined(__PS4__)
 #include <sys/time.h>
 #else
-#include <time.h>
+#include <sys/time.h>
 #endif
 
 #ifdef __cplusplus

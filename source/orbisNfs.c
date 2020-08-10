@@ -1,13 +1,14 @@
 /*
- * liborbis 
- * Copyright (C) 2015,2016,2017,2018 Antonio Jose Ramos Marquez (aka bigboss) @psxdev on twitter
- * Repository https://github.com/orbisdev/liborbis
- */
+#  ____   ____    ____         ___ ____   ____ _     _
+# |    |  ____>   ____>  |    |        | <____  \   /
+# |____| |    \   ____>  | ___|    ____| <____   \_/	ORBISDEV Open Source Project.
+#------------------------------------------------------------------------------------
+# Copyright 2010-2020, orbisdev - http://orbisdev.github.io
+# Licenced under MIT license
+# Review README & LICENSE files for further details.
+*/
 #include <stdio.h>
-#include <kernel.h>
-#include <debugnet.h>
 #include <orbisNfs.h>
-#include <ps4link.h>
 #include <nfsc/libnfs.h>
 #include <nfsc/libnfs-raw-mount.h>
 #include <nfsc/libnfs-raw-nfs.h>
@@ -15,6 +16,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define debugNetPrintf(...)
 
 OrbisNfsConfig *orbisNfsConf=NULL;
 
@@ -918,6 +920,7 @@ void orbisNfsFinish()
 	}
 	orbisNfsConf->orbisnfs_initialized=0;
 }
+
 int orbisNfsBrowserGetDevices()
 {
 	int i;
@@ -1043,11 +1046,12 @@ int orbisNfsCreateConf()
 	//something weird happened
 	return -1;	
 }
+
 char * orbisNfsGetExportPath()
 {
-
 	return orbisNfsConf->urls->path;
 }
+
 int orbisNfsInit(const char *nfsurl)
 {
 	int ret;
@@ -1113,8 +1117,10 @@ int orbisNfsInit(const char *nfsurl)
 	debugNetPrintf(DEBUG,"[ORBISNFS] %s liborbisNfs initialized readChunkSize=%d writeChunkSize=%d\n",__FUNCTION__,orbisNfsConf->readChunkSize,orbisNfsConf->writeChunkSize);
 
 	orbisNfsConf->browserList=malloc(sizeof(OrbisNfsBrowserList));
-	if(orbisNfsConf->browserList)
+	if(orbisNfsConf->browserList!=NULL)
 	{
+		orbisNfsConf->browserList->head=NULL;
+		orbisNfsConf->browserList->tail=NULL;
 		orbisNfsBrowserListClean();
 		strcpy(orbisNfsConf->browserList->path, ".");
 		orbisNfsConf->dirLevel=1;

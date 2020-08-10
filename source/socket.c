@@ -32,7 +32,7 @@
 #endif
 
 #ifdef HAVE_POLL_H
-#include <poll.h>
+#include <net/poll.h>
 #endif
 
 #ifdef HAVE_UNISTD_H
@@ -577,6 +577,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
 		}
 #endif
 		break;
+/*
 	case AF_INET6:
 		socksize = sizeof(struct sockaddr_in6);
 		rpc->fd = create_socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
@@ -591,6 +592,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
 		}
 #endif
 		break;
+*/
 	default:
 		rpc_set_error(rpc, "Can not handle AF_FAMILY:%d", s->ss_family);
 		return -1;
@@ -602,7 +604,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
 	}
 
 	if (rpc->old_fd) {
-#if !defined(WIN32)
+#if 0 //!defined(WIN32)
 		if (dup2(rpc->fd, rpc->old_fd) == -1) {
 			return -1;
 		}
@@ -638,14 +640,14 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
 	{
 		struct sockaddr_storage ss;
                 struct sockaddr_in *sin;
-                struct sockaddr_in6 *sin6;
+//                struct sockaddr_in6 *sin6;
 		static int portOfs = 0;
 		const int firstPort = 512; /* >= 512 according to Sun docs */
 		const int portCount = IPPORT_RESERVED - firstPort;
 		int startOfs, port, rc;
 
                 sin  = (struct sockaddr_in *)&ss;
-                sin6 = (struct sockaddr_in6 *)&ss;
+//                sin6 = (struct sockaddr_in6 *)&ss;
 
 		if (portOfs == 0) {
 			portOfs = 60800;//60000+100*(rand()%11);//rpc_current_time() % 400;
@@ -680,6 +682,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
                                                 sizeof(struct sockaddr_in);
 #endif
 					break;
+/*					
 				case AF_INET6:
 					sin6->sin6_port = port;
 					sin6->sin6_family = AF_INET6;
@@ -688,6 +691,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
                                                 sizeof(struct sockaddr_in6);
 #endif
 					break;
+*/
 				}
 
 				rc = bind(rpc->fd, (struct sockaddr *)&ss,
@@ -735,7 +739,7 @@ rpc_connect_sockaddr_async(struct rpc_context *rpc)
 static int
 rpc_set_sockaddr(struct rpc_context *rpc, const char *server, int port)
 {
-	struct addrinfo *ai = NULL;
+//	struct addrinfo *ai = NULL;
 	debugNetPrintf(3,"[LIBNFS] %s server=%s\n",__FUNCTION__,server);
 
 	//if (getaddrinfo(server, NULL, NULL, &ai) != 0) {
@@ -748,7 +752,7 @@ rpc_set_sockaddr(struct rpc_context *rpc, const char *server, int port)
 //	case AF_INET:
 		((struct sockaddr_in *)&rpc->s)->sin_family = 2;//ai->ai_family;
 		((struct sockaddr_in *)&rpc->s)->sin_port = htons(port);
-		sceNetInetPton(AF_INET, server, &(((struct sockaddr_in *)&rpc->s)->sin_addr));
+		inet_pton(AF_INET, server, &(((struct sockaddr_in *)&rpc->s)->sin_addr));
 		//((struct sockaddr_in *)&rpc->s)->sin_addr =
           //              ((struct sockaddr_in *)(void *)(ai->ai_addr))->sin_addr;
 #ifdef HAVE_SOCKADDR_LEN
@@ -927,7 +931,7 @@ rpc_reconnect_requeue(struct rpc_context *rpc)
 int
 rpc_bind_udp(struct rpc_context *rpc, char *addr, int port)
 {
-	struct addrinfo *ai = NULL;
+//	struct addrinfo *ai = NULL;
 	char service[6];
 
 	assert(rpc->magic == RPC_CONTEXT_MAGIC);
@@ -948,8 +952,7 @@ rpc_bind_udp(struct rpc_context *rpc, char *addr, int port)
 	//case AF_INET:
 		rpc->fd = create_socket(/*ai->ai_family*/AF_INET, SOCK_DGRAM, 0);
 		if (rpc->fd == -1) {
-			rpc_set_error(rpc, "Failed to create UDP socket: %s",
-                                      strerror(errno));
+			rpc_set_error(rpc, "Failed to create UDP socket: %s", strerror(errno));
 	//		freeaddrinfo(ai);
 			return -1;
 		}
@@ -958,12 +961,11 @@ rpc_bind_udp(struct rpc_context *rpc, char *addr, int port)
 	memset(&address, 0, sizeof(address));
 	address.sin_family = AF_INET;
 	address.sin_port = htons(port); 
-	sceNetInetPton(AF_INET,addr, &address.sin_addr);
+	inet_pton(AF_INET,addr, &address.sin_addr);
 
 		if (bind(rpc->fd, (struct sockaddr *)&address,
                          sizeof(struct sockaddr_in)) != 0) {
-			rpc_set_error(rpc, "Failed to bind to UDP socket: %s",
-                                      strerror(errno));
+			rpc_set_error(rpc, "Failed to bind to UDP socket: %s", strerror(errno));
 	//		freeaddrinfo(ai);
 			return -1;
 		}
@@ -984,7 +986,7 @@ int
 rpc_set_udp_destination(struct rpc_context *rpc, char *addr, int port,
                         int is_broadcast)
 {
-	struct addrinfo *ai = NULL;
+//	struct addrinfo *ai = NULL;
 	char service[6];
 
 	assert(rpc->magic == RPC_CONTEXT_MAGIC);
@@ -1006,7 +1008,7 @@ struct sockaddr_in address;
 	memset(&address, 0, sizeof(address));
 	address.sin_family = AF_INET;
 	address.sin_port = htons(port); 
-	sceNetInetPton(AF_INET, addr, &address.sin_addr);
+	inet_pton(AF_INET, addr, &address.sin_addr);
 
 	memcpy(&rpc->udp_dest, &address/*ai->ai_addr*/, sizeof(address)/*ai->ai_addrlen*/);
 	//freeaddrinfo(ai);
