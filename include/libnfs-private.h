@@ -53,7 +53,7 @@
 #if defined(WIN32) && !defined(IFNAMSIZ)
 #define IFNAMSIZ 255
 #else
-#define	IFNAMSIZ 16
+#define IFNAMSIZ 16
 #endif
 
 #include "libnfs-zdr.h"
