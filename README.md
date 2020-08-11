@@ -43,16 +43,18 @@ Install the library to your PSL1GHT setup with:
 make install
 ```
 
-### Credits
+## Credits
 
  - [sahlberg](https://github.com/sahlberg): [libnfs](https://github.com/sahlberg/libnfs)
  - [orbisdev](https://github.com/orbisdev): [liborbisNfs](https://github.com/orbisdev/liborbis/tree/master/liborbisNfs)
 
 ## Server setup
 
+This section explains how to setup a NFS server on your network.
+
 ### Linux/Ubuntu
 
-1. Install the necessary packages and create the shared dir:
+1. Install the necessary packages and create the shared directory:
 
    ```bash
    sudo apt update && sudo apt install nfs-kernel-server
