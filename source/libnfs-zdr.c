@@ -611,7 +611,7 @@ struct AUTH *libnfs_authunix_create(const char *host, uint32_t uid, uint32_t gid
 
 struct AUTH *libnfs_authunix_create_default(void)
 {
-#if 1 //#ifdef WIN32
+#if defined(WIN32) || defined(PS3_PSL1GHT)
 	return libnfs_authunix_create("libnfs", 65534, 65534, 0, NULL);
 #else
 	return libnfs_authunix_create("libnfs", getuid(), getgid(), 0, NULL);
