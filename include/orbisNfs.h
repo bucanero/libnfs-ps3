@@ -12,6 +12,7 @@
 
 #include <stdio.h> // SEEK_*
 #include <dirent.h>
+#include <sys/time.h>
 #include <nfsc/libnfs.h>
 
 
