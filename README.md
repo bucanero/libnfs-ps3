@@ -1,4 +1,4 @@
-# libNFS library (PS3)
+# libNFS libraries (PS3)
 
 This library port provides NFS (Network File System) access to the PlayStation 3 using the [PSL1GHT SDK](https://github.com/ps3dev/PSL1GHT/).
 
