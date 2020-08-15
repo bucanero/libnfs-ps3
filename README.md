@@ -22,6 +22,23 @@ This API is described by the *_sync() functions in `include/libnfs.h`.
 This API provides access to posix vfs like functions such as
 stat(), read(), ...
 
+### Build/Install
+
+Download `libnfs` with:
+```
+git clone https://github.com/sahlberg/libnfs
+```
+
+Build the `libnfs` library with: 
+```
+make -f ps3_ppu/Makefile.PS3_PPU
+```
+
+Install the library to your PSL1GHT setup with:
+```
+make -f ps3_ppu/Makefile.PS3_PPU install
+```
+
 ## liborbisNfs
 
 `liborbisNfs` is a homebrew userland library based in `libnfs` and it's part of [LIBORBIS](https://github.com/orbisdev/liborbis).
@@ -31,9 +48,9 @@ You must use only IP addresses, name resolution is not implemented.
 orbisNfsInit("nfs://10.0.0.1/path/of/your/export");
 ```
 
-## Build/Install
+### Build/Install
 
-Build the library with: 
+Build the `liborbisNfs` library with: 
 ```
 make
 ```
