@@ -30,14 +30,14 @@ export DEPSDIR		:=	$(DEPS)/$(PLATFORM)
 endif
 #---------------------------------------------------------------------------------
 
-TARGET		:=	libnfs
+TARGET		:=	liborbisNfs
 BUILD		:=	build
 SOURCE		:=	source
 INCLUDE		:=	include include/nfsc
 DATA		:=	data
 LIBS		:=	 
 
-MACHDEP		:= -DPS3_PSL1GHT -DHAVE_CONFIG_H -D_U_="__attribute__((unused))"
+MACHDEP		:= -DPS3_PPU
 CFLAGS		+= -O2 -Wall -mcpu=cell $(MACHDEP) -fno-strict-aliasing $(INCLUDES)
 
 LD			:=	ppu-ld
@@ -80,8 +80,6 @@ $(BUILD):
 
 install: $(BUILD)
 	@echo Copying...
-	@[ -d $(PORTLIBS)/include/nfsc ] || mkdir -p $(PORTLIBS)/include/nfsc
-	@cp -frv include/nfsc/*.h $(PORTLIBS)/include/nfsc
 	@cp -frv include/orbisNfs.h $(PORTLIBS)/include
 	@cp -frv *.a $(PORTLIBS)/lib
 	@echo Done!
